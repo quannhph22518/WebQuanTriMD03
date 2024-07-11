@@ -113,7 +113,7 @@ import {
 } from "../features/color/colorSlice";
 
 let schema = yup.object().shape({
-  title: yup.string().required("Color Name is Required"),
+  title: yup.string().required("*Nhập màu sắc"),
 });
 const Addcolor = () => {
   const dispatch = useDispatch();
@@ -139,15 +139,15 @@ const Addcolor = () => {
 
   useEffect(() => {
     if (isSuccess && createdColor) {
-      toast.success("Color Added Successfullly!");
+      toast.success("Thêm màu sách thành công!");
     }
     if (isSuccess && updatedColor) {
-      toast.success("Color Updated Successfullly!");
+      toast.success("Cập nhật màu sắc thành công!");
       navigate("/admin/list-color");
     }
 
     if (isError) {
-      toast.error("Something Went Wrong!");
+      toast.error("Đã có lỗi xảy ra!");
     }
   }, [isSuccess, isError, isLoading]);
   const formik = useFormik({
@@ -174,7 +174,7 @@ const Addcolor = () => {
   return (
     <div>
       <h3 className="mb-4 title">
-        {getColorId !== undefined ? "Edit" : "Add"} Color
+        {getColorId !== undefined ? "Cập nhật" : "Thêm"} màu sắc
       </h3>
       <div>
         <form action="" onSubmit={formik.handleSubmit}>
@@ -184,7 +184,7 @@ const Addcolor = () => {
             onChng={formik.handleChange("title")}
             onBlr={formik.handleBlur("title")}
             val={formik.values.title}
-            label="Enter Color"
+            label="Nhập màu sắc"
             id="color"
           />
           <div className="error">
@@ -194,7 +194,7 @@ const Addcolor = () => {
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
           >
-            {getColorId !== undefined ? "Edit" : "Add"} Color
+            {getColorId !== undefined ? "Cập nhật" : "Thêm"} màu sắc
           </button>
         </form>
       </div>

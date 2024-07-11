@@ -4,19 +4,19 @@ import { Column } from "@ant-design/plots";
 import { Table } from "antd";
 const columns = [
   {
-    title: "SNo",
+    title: "STT",
     dataIndex: "key",
   },
   {
-    title: "Name",
+    title: "Tên người dùng",
     dataIndex: "name",
   },
   {
-    title: "Product",
+    title: "Sản Phẩm",
     dataIndex: "product",
   },
   {
-    title: "Status",
+    title: "Địa chỉ",
     dataIndex: "staus",
   },
 ];
@@ -32,51 +32,51 @@ for (let i = 0; i < 46; i++) {
 const Dashboard = () => {
   const data = [
     {
-      type: "Jan",
+      type: "Tháng 1",
       sales: 38,
     },
     {
-      type: "Feb",
+      type: "Tháng 2",
       sales: 52,
     },
     {
-      type: "Mar",
+      type: "Tháng 3",
       sales: 61,
     },
     {
-      type: "Apr",
+      type: "Tháng 4",
       sales: 145,
     },
     {
-      type: "May",
+      type: "Tháng 5",
       sales: 48,
     },
     {
-      type: "Jun",
+      type: "Tháng 6",
       sales: 38,
     },
     {
-      type: "July",
+      type: "Tháng 7",
       sales: 38,
     },
     {
-      type: "Aug",
+      type: "Tháng 8",
       sales: 38,
     },
     {
-      type: "Sept",
+      type: "Tháng 9",
       sales: 38,
     },
     {
-      type: "Oct",
+      type: "Tháng 10",
       sales: 38,
     },
     {
-      type: "Nov",
+      type: "Tháng 11",
       sales: 38,
     },
     {
-      type: "Dec",
+      type: "Tháng 12",
       sales: 38,
     },
   ];
@@ -88,7 +88,7 @@ const Dashboard = () => {
       return "#ffd333";
     },
     label: {
-      position: "middle",
+      // position: "middle",
       style: {
         fill: "#FFFFFF",
         opacity: 1,
@@ -111,53 +111,53 @@ const Dashboard = () => {
   };
   return (
     <div>
-      <h3 className="mb-4 title">Dashboard</h3>
+      <h3 className="mb-4 title">Thống kê</h3>
       <div className="d-flex justify-content-between align-items-center gap-3">
         <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 roudned-3">
           <div>
-            <p className="desc">Total</p>
+            <p className="desc">Tổng</p>
             <h4 className="mb-0 sub-title">$1100</h4>
           </div>
           <div className="d-flex flex-column align-items-end">
             <h6>
               <BsArrowDownRight /> 32%
             </h6>
-            <p className="mb-0  desc">Compared To April 2022</p>
+            <p className="mb-0  desc">so với tháng 5 2024</p>
           </div>
         </div>
         <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 roudned-3">
           <div>
-            <p className="desc">Total</p>
+            <p className="desc">Tổng</p>
             <h4 className="mb-0 sub-title">$1100</h4>
           </div>
           <div className="d-flex flex-column align-items-end">
             <h6 className="red">
               <BsArrowDownRight /> 32%
             </h6>
-            <p className="mb-0  desc">Compared To April 2022</p>
+            <p className="mb-0  desc">So với tháng 6 2024</p>
           </div>
         </div>
         <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 roudned-3">
           <div>
-            <p className="desc">Total</p>
+            <p className="desc">Tổng</p>
             <h4 className="mb-0 sub-title">$1100</h4>
           </div>
           <div className="d-flex flex-column align-items-end">
             <h6 className="green">
               <BsArrowDownRight /> 32%
             </h6>
-            <p className="mb-0 desc">Compared To April 2022</p>
+            <p className="mb-0 desc">so với tháng 7 2024</p>
           </div>
         </div>
       </div>
       <div className="mt-4">
-        <h3 className="mb-5 title">Income Statics</h3>
+        <h3 className="mb-5 title">Thống kê doanh thu</h3>
         <div>
           <Column {...config} />
         </div>
       </div>
       <div className="mt-4">
-        <h3 className="mb-5 title">Recent Orders</h3>
+        <h3 className="mb-5 title">Những đơn đặt hàng gần đây</h3>
         <div>
           <Table columns={columns} dataSource={data1} />
         </div>

@@ -7,36 +7,36 @@ import { Link, useLocation } from "react-router-dom";
 import { getOrderByUser, getOrders } from "../features/auth/authSlice";
 const columns = [
   {
-    title: "SNo",
+    title: "STT",
     dataIndex: "key",
   },
   {
-    title: "Product Name",
+    title: "Tên sản phẩm",
     dataIndex: "name",
   },
   {
-    title: "Brand",
+    title: "Thương hiệu",
     dataIndex: "brand",
   },
   {
-    title: "Count",
+    title: "Số lượng",
     dataIndex: "count",
   },
   {
-    title: "Color",
+    title: "Màu sắc",
     dataIndex: "color",
   },
   {
-    title: "Amount",
+    title: "Tổng tiền",
     dataIndex: "amount",
   },
   {
-    title: "Date",
+    title: "Thời gian",
     dataIndex: "date",
   },
 
   {
-    title: "Action",
+    title: "Hành động",
     dataIndex: "action",
   },
 ];
