@@ -13,9 +13,9 @@ import {
 } from "../features/coupon/couponSlice";
 
 let schema = yup.object().shape({
-  name: yup.string().required("Coupon Name is Required"),
-  expiry: yup.date().required("Expiry Date is Required"),
-  discount: yup.number().required("Discount Percentage is Required"),
+  name: yup.string().required("*Nhập tên mã giảm giá"),
+  expiry: yup.date().required("*Nhập ngày hết hạn mã"),
+  discount: yup.number().required("*Nhập % giảm giá."),
 });
 const AddCoupon = () => {
   const dispatch = useDispatch();
@@ -50,14 +50,14 @@ const AddCoupon = () => {
 
   useEffect(() => {
     if (isSuccess && createdCoupon) {
-      toast.success("Coupon Added Successfullly!");
+      toast.success("Thêm mã giảm giá thành công!");
     }
     if (isSuccess && updatedCoupon) {
-      toast.success("Coupon Updated Successfullly!");
+      toast.success("Cập nhật mã giảm giá thành công!");
       navigate("/admin/coupon-list");
     }
     if (isError && couponName && couponDiscount && couponExpiry) {
-      toast.error("Something Went Wrong!");
+      toast.error("Đã có lỗi xả ra!");
     }
   }, [isSuccess, isError, isLoading]);
   const formik = useFormik({
@@ -86,7 +86,7 @@ const AddCoupon = () => {
   return (
     <div>
       <h3 className="mb-4 title">
-        {getCouponId !== undefined ? "Edit" : "Add"} Coupon
+        {getCouponId !== undefined ? "Cập nhật" : "Thêm"} mã giảm giá
       </h3>
       <div>
         <form action="" onSubmit={formik.handleSubmit}>
@@ -96,7 +96,7 @@ const AddCoupon = () => {
             onChng={formik.handleChange("name")}
             onBlr={formik.handleBlur("name")}
             val={formik.values.name}
-            label="Enter Coupon Name"
+            label="Nhập tên mã giảm giá"
             id="name"
           />
           <div className="error">
@@ -108,7 +108,7 @@ const AddCoupon = () => {
             onChng={formik.handleChange("expiry")}
             onBlr={formik.handleBlur("expiry")}
             val={formik.values.expiry}
-            label="Enter Expiry Data"
+            label="Nhập ngày hết hạn mã giảm giá"
             id="date"
           />
           <div className="error">
@@ -120,7 +120,7 @@ const AddCoupon = () => {
             onChng={formik.handleChange("discount")}
             onBlr={formik.handleBlur("discount")}
             val={formik.values.discount}
-            label="Enter Discount"
+            label="Nhập % giảm giá"
             id="discount"
           />
           <div className="error">
@@ -130,7 +130,7 @@ const AddCoupon = () => {
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
           >
-            {getCouponId !== undefined ? "Edit" : "Add"} Coupon
+            {getCouponId !== undefined ? "Cập nhật" : "Thêm"} mã giảm giá
           </button>
         </form>
       </div>

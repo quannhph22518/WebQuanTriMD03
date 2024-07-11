@@ -15,17 +15,17 @@ import Dropzone from "react-dropzone";
 import { delImg, uploadImg } from "../features/upload/uploadSlice";
 import { createProducts, resetState } from "../features/product/productSlice";
 let schema = yup.object().shape({
-  title: yup.string().required("Title is Required"),
-  description: yup.string().required("Description is Required"),
-  price: yup.number().required("Price is Required"),
-  brand: yup.string().required("Brand is Required"),
-  category: yup.string().required("Category is Required"),
-  tags: yup.string().required("Tag is Required"),
+  title: yup.string().required("*Nhập tiêu đề"),
+  description: yup.string().required("*Nhập mô tả sản phẩm"),
+  price: yup.number().required("*Nhập giá sản phẩm"),
+  brand: yup.string().required("*Nhập thương hiệu sản phẩm"),
+  category: yup.string().required("*Chọn loại sản phẩm"),
+  tags: yup.string().required("*Chọn tag sản phẩm"),
   color: yup
     .array()
-    .min(1, "Pick at least one color")
-    .required("Color is Required"),
-  quantity: yup.number().required("Quantity is Required"),
+    .min(1, "Chọn màu sản phẩm")
+    .required("*Màu sản phẩm là bắt buộc"),
+  quantity: yup.number().required("*Nhập số lượng sản phẩm"),
 });
 
 const Addproduct = () => {
@@ -48,10 +48,10 @@ const Addproduct = () => {
   const { isSuccess, isError, isLoading, createdProduct } = newProduct;
   useEffect(() => {
     if (isSuccess && createdProduct) {
-      toast.success("Product Added Successfullly!");
+      toast.success("Thêm sản phẩm thành công!");
     }
     if (isError) {
-      toast.error("Something Went Wrong!");
+      toast.error("Đã có lỗi xảy ra!");
     }
   }, [isSuccess, isError, isLoading]);
   const coloropt = [];
@@ -101,7 +101,7 @@ const Addproduct = () => {
   };
   return (
     <div>
-      <h3 className="mb-4 title">Add Product</h3>
+      <h3 className="mb-4 title">Thêm sản phẩm</h3>
       <div>
         <form
           onSubmit={formik.handleSubmit}
@@ -109,7 +109,7 @@ const Addproduct = () => {
         >
           <CustomInput
             type="text"
-            label="Enter Product Title"
+            label="Nhập tiêu đề sản phẩm"
             name="title"
             onChng={formik.handleChange("title")}
             onBlr={formik.handleBlur("title")}
@@ -131,7 +131,7 @@ const Addproduct = () => {
           </div>
           <CustomInput
             type="number"
-            label="Enter Product Price"
+            label="Nhập giá sản phẩm"
             name="price"
             onChng={formik.handleChange("price")}
             onBlr={formik.handleBlur("price")}
@@ -148,7 +148,7 @@ const Addproduct = () => {
             className="form-control py-3 mb-3"
             id=""
           >
-            <option value="">Select Brand</option>
+            <option value="">Chọn thương hiệu </option>
             {brandState.map((i, j) => {
               return (
                 <option key={j} value={i.title}>
@@ -168,7 +168,7 @@ const Addproduct = () => {
             className="form-control py-3 mb-3"
             id=""
           >
-            <option value="">Select Category</option>
+            <option value="">Chọn loại sản phẩm </option>
             {catState.map((i, j) => {
               return (
                 <option key={j} value={i.title}>
@@ -189,7 +189,7 @@ const Addproduct = () => {
             id=""
           >
             <option value="" disabled>
-              Select Tag
+              Chọn Tag
             </option>
             <option value="featured">Featured</option>
             <option value="popular">Popular</option>
@@ -203,7 +203,7 @@ const Addproduct = () => {
             mode="multiple"
             allowClear
             className="w-100"
-            placeholder="Select colors"
+            placeholder="Chọn màu sắc"
             defaultValue={color}
             onChange={(i) => handleColors(i)}
             options={coloropt}
@@ -213,7 +213,7 @@ const Addproduct = () => {
           </div>
           <CustomInput
             type="number"
-            label="Enter Product Quantity"
+            label="Nhập số lượng sản phẩm"
             name="quantity"
             onChng={formik.handleChange("quantity")}
             onBlr={formik.handleBlur("quantity")}
@@ -257,7 +257,7 @@ const Addproduct = () => {
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
           >
-            Add Product
+            Thêm sản phẩm
           </button>
         </form>
       </div>

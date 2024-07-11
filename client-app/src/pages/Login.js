@@ -9,9 +9,9 @@ import { login } from "../features/auth/authSlice";
 let schema = yup.object().shape({
   email: yup
     .string()
-    .email("Email should be valid")
-    .required("Email is Required"),
-  password: yup.string().required("Password is Required"),
+    .email("Email phải hợp lệ")
+    .required("*Nhập email"),
+  password: yup.string().required("*Nhập mật khẩu"),
 });
 const Login = () => {
   const dispatch = useDispatch();
@@ -45,15 +45,16 @@ const Login = () => {
       <br />
       <br />
       <div className="my-5 w-25 bg-white rounded-3 mx-auto p-4">
-        <h3 className="text-center title">Login</h3>
-        <p className="text-center">Login to your account to continue.</p>
+        <h3 className="text-center title">Đăng nhập</h3>
+        <p className="text-center">Đăng nhập vào tài khoản của bạn để tiếp tục
+        .</p>
         <div className="error text-center">
           {message.message == "Rejected" ? "You are not an Admin" : ""}
         </div>
         <form action="" onSubmit={formik.handleSubmit}>
           <CustomInput
             type="text"
-            label="Email Address"
+            label="Địa chỉ email"
             id="email"
             name="email"
             onChng={formik.handleChange("email")}
@@ -65,7 +66,7 @@ const Login = () => {
           </div>
           <CustomInput
             type="password"
-            label="Password"
+            label="Mật khẩu"
             id="pass"
             name="password"
             onChng={formik.handleChange("password")}
@@ -77,7 +78,7 @@ const Login = () => {
           </div>
           <div className="mb-3 text-end">
             <Link to="forgot-password" className="">
-              Forgot Password?
+              Quên mật khẩu?
             </Link>
           </div>
           <button
@@ -85,7 +86,7 @@ const Login = () => {
             style={{ background: "#ffd333" }}
             type="submit"
           >
-            Login
+            Đăng nhập
           </button>
         </form>
       </div>

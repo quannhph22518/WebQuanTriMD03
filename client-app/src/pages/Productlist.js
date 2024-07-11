@@ -7,35 +7,35 @@ import { getProducts } from "../features/product/productSlice";
 import { Link } from "react-router-dom";
 const columns = [
   {
-    title: "SNo",
+    title: "STT",
     dataIndex: "key",
   },
   {
-    title: "Title",
+    title: "Tên sản phẩm",
     dataIndex: "title",
     sorter: (a, b) => a.title.length - b.title.length,
   },
   {
-    title: "Brand",
+    title: "Thương hiệu",
     dataIndex: "brand",
     sorter: (a, b) => a.brand.length - b.brand.length,
   },
   {
-    title: "Category",
+    title: "Loại sản phẩm",
     dataIndex: "category",
     sorter: (a, b) => a.category.length - b.category.length,
   },
   {
-    title: "Color",
+    title: "Màu sắc",
     dataIndex: "color",
   },
   {
-    title: "Price",
+    title: "Giá",
     dataIndex: "price",
     sorter: (a, b) => a.price - b.price,
   },
   {
-    title: "Action",
+    title: "Hành động",
     dataIndex: "action",
   },
 ];
@@ -58,6 +58,7 @@ const Productlist = () => {
       action: (
         <>
           <Link to="/" className=" fs-3 text-danger">
+
             <BiEdit />
           </Link>
           <Link className="ms-3 fs-3 text-danger" to="/">
@@ -70,7 +71,7 @@ const Productlist = () => {
   console.log(data1);
   return (
     <div>
-      <h3 className="mb-4 title">Products</h3>
+      <h3 className="mb-4 title">Danh sách sản phẩm</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>

@@ -13,7 +13,7 @@ import {
 } from "../features/brand/brandSlice";
 
 let schema = yup.object().shape({
-  title: yup.string().required("Brand Name is Required"),
+  title: yup.string().required("*Tên thương hiệu là bắt buộc"),
 });
 const Addbrand = () => {
   const dispatch = useDispatch();
@@ -39,15 +39,15 @@ const Addbrand = () => {
 
   useEffect(() => {
     if (isSuccess && createdBrand) {
-      toast.success("Brand Added Successfullly!");
+      toast.success("Thêm thương hiệu thành công!");
     }
     if (isSuccess && updatedBrand) {
-      toast.success("Brand Updated Successfullly!");
+      toast.success("Cập nhật thương hiệu thành công!");
       navigate("/admin/list-brand");
     }
 
     if (isError) {
-      toast.error("Something Went Wrong!");
+      toast.error("Đã xảy ra lỗi!");
     }
   }, [isSuccess, isError, isLoading]);
   const formik = useFormik({
@@ -74,7 +74,7 @@ const Addbrand = () => {
   return (
     <div>
       <h3 className="mb-4 title">
-        {getBrandId !== undefined ? "Edit" : "Add"} Brand
+        {getBrandId !== undefined ? "Cập nhật" : "Thêm"} thương hiệu
       </h3>
       <div>
         <form action="" onSubmit={formik.handleSubmit}>
@@ -84,7 +84,7 @@ const Addbrand = () => {
             onChng={formik.handleChange("title")}
             onBlr={formik.handleBlur("title")}
             val={formik.values.title}
-            label="Enter Brand"
+            label="Nhập tên thương hiệu"
             id="brand"
           />
           <div className="error">
@@ -94,7 +94,7 @@ const Addbrand = () => {
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
           >
-            {getBrandId !== undefined ? "Edit" : "Add"} Brand
+            {getBrandId !== undefined ? "Cập nhật" : "Thêm"} thương hiệu
           </button>
         </form>
       </div>

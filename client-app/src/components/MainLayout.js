@@ -31,7 +31,7 @@ const MainLayout = () => {
         <div className="logo">
           <h2 className="text-white fs-5 text-center py-3 mb-0">
             <span className="sm-logo">LX</span>
-            <span className="lg-logo">LX Panel Admin</span>
+            <span className="lg-logo">Trang quản lí LX</span>
           </h2>
         </div>
         <Menu
@@ -48,86 +48,86 @@ const MainLayout = () => {
             {
               key: "",
               icon: <AiOutlineDashboard className="fs-4" />,
-              label: "Dashboard",
+              label: "Thống kê",
             },
             {
               key: "customers",
               icon: <AiOutlineUser className="fs-4" />,
-              label: "Customers",
+              label: "Người dùng",
             },
             {
               key: "Catalog",
               icon: <AiOutlineShoppingCart className="fs-4" />,
-              label: "Catalog",
+              label: "Tổng quan",
               children: [
                 {
                   key: "product",
                   icon: <AiOutlineShoppingCart className="fs-4" />,
-                  label: "Add Product",
+                  label: "Thêm sản phẩm",
                 },
                 {
                   key: "list-product",
                   icon: <AiOutlineShoppingCart className="fs-4" />,
-                  label: "Product List",
+                  label: "Danh sách sản phẩm",
                 },
                 {
                   key: "brand",
                   icon: <SiBrandfolder className="fs-4" />,
-                  label: "Brand",
+                  label: "Thương hiệu",
                 },
                 {
                   key: "list-brand",
                   icon: <SiBrandfolder className="fs-4" />,
-                  label: "Brand List ",
+                  label: "Danh sách thương hiệu ",
                 },
                 {
                   key: "category",
                   icon: <BiCategoryAlt className="fs-4" />,
-                  label: "Category",
+                  label: "Loại sản phẩm",
                 },
                 {
                   key: "list-category",
                   icon: <BiCategoryAlt className="fs-4" />,
-                  label: "Category List",
+                  label: "Danh sách loại sản phẩm",
                 },
                 {
                   key: "color",
                   icon: <AiOutlineBgColors className="fs-4" />,
-                  label: "Color",
+                  label: "Màu sắc",
                 },
                 {
                   key: "list-color",
                   icon: <AiOutlineBgColors className="fs-4" />,
-                  label: "Color List",
+                  label: "Danh sách màu sắc",
                 },
               ],
             },
             {
               key: "orders",
               icon: <FaClipboardList className="fs-4" />,
-              label: "Orders",
+              label: "Đơn hàng",
             },
             {
               key: "marketing",
               icon: <RiCouponLine className="fs-4" />,
-              label: "Marketing",
+              label: "Mã giảm giá",
               children: [
                 {
                   key: "coupon",
                   icon: <ImBlog className="fs-4" />,
-                  label: "Add Coupon",
+                  label: "Thêm mã giảm giá",
                 },
                 {
                   key: "coupon-list",
                   icon: <RiCouponLine className="fs-4" />,
-                  label: "Coupon List",
+                  label: "Danh sách mã giảm giá",
                 },
               ],
             },
             {
               key: "enquiries",
               icon: <FaClipboardList className="fs-4" />,
-              label: "Enquiries",
+              label: "Phản hồi",
             },
           ]}
         />
