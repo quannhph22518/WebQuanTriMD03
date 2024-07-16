@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../features/product/productSlice";
+import { deleteAProduct, getProducts, resetState } from "../features/product/productSlice";
 import { Link } from "react-router-dom";
+import CustomModal from "../components/CustomModal";
 const columns = [
   {
     title: "STT",
@@ -41,8 +42,20 @@ const columns = [
 ];
 
 const Productlist = () => {
+  
+  const [open, setOpen] = useState(false);
+  const [productID, setproductId] = useState("");
+  const showModal = (e) => {
+    setOpen(true);
+    setproductId(e);
+  };
+
+  const hideModal = () => {
+    setOpen(false);
+  };
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(resetState());
     dispatch(getProducts());
   }, []);
   const productState = useSelector((state) => state.product.products);
@@ -57,17 +70,30 @@ const Productlist = () => {
       price: `${productState[i].price}`,
       action: (
         <>
-          <Link to="/" className=" fs-3 text-danger">
-
+          <Link
+            to={`/admin/product/${productState[i]._id}`}
+            className=" fs-3 text-danger"
+          >
             <BiEdit />
           </Link>
-          <Link className="ms-3 fs-3 text-danger" to="/">
+          <button
+            className="ms-3 fs-3 text-danger bg-transparent border-0"
+            onClick={() => showModal(productState[i]._id)}
+          >
             <AiFillDelete />
-          </Link>
+          </button>
         </>
       ),
     });
   }
+  const deleteProduct = (e) => {
+    dispatch(deleteAProduct(e));
+
+    setOpen(false);
+    setTimeout(() => {
+      dispatch(getProducts());
+    }, 100);
+  };
   console.log(data1);
   return (
     <div>
@@ -75,6 +101,14 @@ const Productlist = () => {
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
+      <CustomModal
+        hideModal={hideModal}
+        open={open}
+        performAction={() => {
+          deleteProduct(productID);
+        }}
+        title="Bạn có chắc chắn muốn xóa?"
+      />
     </div>
   );
 };
