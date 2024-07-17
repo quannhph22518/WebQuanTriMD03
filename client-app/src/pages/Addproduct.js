@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import CustomInput from "../components/CustomInput";
 import ReactQuill from "react-quill";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "react-quill/dist/quill.snow.css";
 import { toast } from "react-toastify";
 import * as yup from "yup";
@@ -13,7 +13,7 @@ import { getColors } from "../features/color/colorSlice";
 import { Select } from "antd";
 import Dropzone from "react-dropzone";
 import { delImg, uploadImg } from "../features/upload/uploadSlice";
-import { createProducts, resetState } from "../features/product/productSlice";
+import { createProducts, resetState, getAProduct, updateAProduct, } from "../features/product/productSlice";
 let schema = yup.object().shape({
   title: yup.string().required("*Nhập tiêu đề"),
   description: yup.string().required("*Nhập mô tả sản phẩm"),
@@ -34,24 +34,54 @@ const Addproduct = () => {
   const [color, setColor] = useState([]);
   const [images, setImages] = useState([]);
   console.log(color);
+  const brandState = useSelector((state) => state.brand.brands);
+  const catState = useSelector((state) => state.pCategory.pCategories);
+  const colorState = useSelector((state) => state.color.colors);
+  const imgState = useSelector((state) => state.upload.images);
+  const newProduct = useSelector((state) => state.product);
+  const location = useLocation();
+  const getProductId = location.pathname.split("/")[3];// Lấy ra tên sản phẩm
+
+  const { 
+    productTilte,
+    productDescription, 
+    productPrice,
+    productCategory,
+    productTags,
+    productColor,
+    productQuantity,
+    productImage,
+    productBrand,
+    isSuccess, 
+    isError, 
+    isLoading, 
+    createdProduct, 
+    updateProduct } = newProduct;
   useEffect(() => {
     dispatch(getBrands());
     dispatch(getCategories());
     dispatch(getColors());
   }, []);
 
-  const brandState = useSelector((state) => state.brand.brands);
-  const catState = useSelector((state) => state.pCategory.pCategories);
-  const colorState = useSelector((state) => state.color.colors);
-  const imgState = useSelector((state) => state.upload.images);
-  const newProduct = useSelector((state) => state.product);
-  const { isSuccess, isError, isLoading, createdProduct } = newProduct;
+  useEffect(() => {
+    if (getProductId !== undefined) {
+      dispatch(getAProduct(getProductId));
+    } else {
+      dispatch(resetState());
+    }
+  }, [getProductId]);
+
+
   useEffect(() => {
     if (isSuccess && createdProduct) {
       toast.success("Thêm sản phẩm thành công!");
     }
     if (isError) {
       toast.error("Đã có lỗi xảy ra!");
+    }
+    if (isSuccess && updateProduct) {
+      toast.success("Cập nhật sản phẩm thành công!");
+      navigate("/admin/list-product")
     }
   }, [isSuccess, isError, isLoading]);
   const coloropt = [];
@@ -74,25 +104,32 @@ const Addproduct = () => {
     formik.values.images = img;
   }, [color, img]);
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      title: "",
-      description: "",
-      price: "",
-      brand: "",
-      category: "",
-      tags: "",
-      color: "",
-      quantity: "",
-      images: "",
+      title: productTilte ||"",
+      description: productDescription ||"",
+      price: productPrice || "",
+      brand: productBrand ||  "",
+      category: productCategory || "",
+      tags: productTags || "",
+      color: productColor || "",
+      quantity: productQuantity || "",
+      images: productImage || "",
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      dispatch(createProducts(values));
-      formik.resetForm();
-      setColor(null);
-      setTimeout(() => {
+      if (getProductId !== undefined) { //sửa sản phẩm trên database
+        const data = { id: getProductId, productData: values };
+        dispatch(updateAProduct(data));
         dispatch(resetState());
-      }, 3000);
+      } else {
+        dispatch(createProducts(values));
+        formik.resetForm();
+        setColor(null);
+        setTimeout(() => {
+          dispatch(resetState());
+        }, 3000);
+      }
     },
   });
   const handleColors = (e) => {
@@ -101,7 +138,8 @@ const Addproduct = () => {
   };
   return (
     <div>
-      <h3 className="mb-4 title">Thêm sản phẩm</h3>
+      <h3 className="mb-4 title">
+        {getProductId !== undefined ? "Cập nhật" : "Thêm"} sản phẩm</h3>
       <div>
         <form
           onSubmit={formik.handleSubmit}
@@ -257,7 +295,7 @@ const Addproduct = () => {
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
           >
-            Thêm sản phẩm
+            {getProductId !== undefined ? "Cập nhật" : "Thêm"} sản phẩm
           </button>
         </form>
       </div>

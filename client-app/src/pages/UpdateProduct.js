@@ -101,7 +101,7 @@ const UpdateProduct = () => {
   };
   return (
     <div>
-      <h3 className="mb-4 title">Thêm sản phẩm</h3>
+      <h3 className="mb-4 title">Cập nhật sản phẩm</h3>
       <div>
         <form
           onSubmit={formik.handleSubmit}
@@ -257,7 +257,7 @@ const UpdateProduct = () => {
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
           >
-            Thêm sản phẩm
+            Cập nhật sản phẩm
           </button>
         </form>
       </div>

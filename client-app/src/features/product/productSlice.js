@@ -12,7 +12,7 @@ export const getProducts = createAsyncThunk(
   }
 );
 export const createProducts = createAsyncThunk(
-  "product/create-products",
+  "product/create-product",
   async (productData, thunkAPI) => {
     try {
       return await productService.createProduct(productData);
@@ -48,7 +48,7 @@ export const updateAProduct = createAsyncThunk(
   "product/update-product",
   async (product, thunkAPI) => {
     try {
-      return await productService.updatepProduct(product);
+      return await productService.updateProduct(product);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
