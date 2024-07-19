@@ -32,7 +32,7 @@ export const getAProduct = createAsyncThunk(
     }
   }
 );
-
+// call delete
 export const deleteAProduct = createAsyncThunk(
   "product/delete-product",
   async (id, thunkAPI) => {
@@ -43,7 +43,7 @@ export const deleteAProduct = createAsyncThunk(
     }
   }
 );
-
+// call update
 export const updateAProduct = createAsyncThunk(
   "product/update-product",
   async (product, thunkAPI) => {
@@ -63,6 +63,16 @@ const initialState = {
   isSuccess: false,
   message: "",
 };
+export const getProductAPrice = createAsyncThunk(
+  "product/price",
+  async (price, thunkAPI) => {
+    try {
+      return await productService.getProductPrice(price);
+    }catch (error){
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 export const productSlice = createSlice({
   name: "products",
   initialState,
@@ -99,7 +109,7 @@ export const productSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
       })
-
+      // add thêm case để update
       .addCase(updateAProduct.pending, (state) => {
         state.isLoading = true;
       })
@@ -133,6 +143,7 @@ export const productSlice = createSlice({
       .addCase(deleteAProduct.pending, (state) => {
         state.isLoading = true;
       })
+      //mình có add thêm case để xóa sản phẩm
       .addCase(deleteAProduct.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
@@ -140,6 +151,21 @@ export const productSlice = createSlice({
         state.deleteProduct= action.payload;
       })
       .addCase(deleteAProduct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(getProductAPrice.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getProductAPrice.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.getProductPrice= action.payload;
+      })
+      .addCase(getProductAPrice.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;

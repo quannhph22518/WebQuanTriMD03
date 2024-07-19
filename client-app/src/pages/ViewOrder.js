@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { Link, useLocation } from "react-router-dom";
-import { getOrderByUser, getOrders } from "../features/auth/authSlice";
+import { getOrderByUser, getOrders, resetState } from "../features/auth/authSlice";
+import CustomModal from "../components/CustomModal";
 const columns = [
   {
     title: "STT",
@@ -42,13 +43,24 @@ const columns = [
 ];
 
 const ViewOrder = () => {
+  const [open, setOpen] = useState(false);
+  const setOrderByUser = useState("");
   const location = useLocation();
   const userId = location.pathname.split("/")[3];
   const dispatch = useDispatch();
+  
+  const showModal = (e) => {
+    setOpen(true);
+    setOrderByUser(e);
+  };
+  const hideModal = () => {
+    setOpen(false);
+  };
   useEffect(() => {
+    dispatch(resetState());
     dispatch(getOrderByUser(userId));
   }, []);
-  const orderState = useSelector((state) => state.auth.orderbyuser[0].products);
+  const orderState = useSelector((state) => state.product.products);
   console.log(orderState);
   const data1 = [];
   for (let i = 0; i < orderState.length; i++) {
@@ -62,12 +74,14 @@ const ViewOrder = () => {
       date: orderState[i].product.createdAt,
       action: (
         <>
-          <Link to="/" className=" fs-3 text-danger">
+          <Link to={`/admin/order/${orderState[i].orderbyuser}`}
+            className=" fs-3 text-danger">
             <BiEdit />
           </Link>
-          <Link className="ms-3 fs-3 text-danger" to="/">
+          <button className="ms-3 fs-3 text-danger"
+            onClick={() => showModal(orderState[i].orderbyuser)}>
             <AiFillDelete />
-          </Link>
+          </button>
         </>
       ),
     });

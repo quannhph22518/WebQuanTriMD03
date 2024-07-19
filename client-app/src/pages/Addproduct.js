@@ -79,7 +79,7 @@ const Addproduct = () => {
     if (isError) {
       toast.error("Đã có lỗi xảy ra!");
     }
-    if (isSuccess && updateProduct) {
+    if (isSuccess && updateProduct) {//mình có add thêm điều kiện này khi ấn update sản phẩm
       toast.success("Cập nhật sản phẩm thành công!");
       navigate("/admin/list-product")
     }
@@ -87,8 +87,8 @@ const Addproduct = () => {
   const coloropt = [];
   colorState.forEach((i) => {
     coloropt.push({
-      label: i.title,
-      value: i._id,
+      // label: i.title,
+      value: i.title,
     });
   });
   const img = [];

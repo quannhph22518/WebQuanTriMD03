@@ -33,12 +33,19 @@ const getProduct = async (id) => {
   return response.data;
 };
 
+const getProductPrice = async(price) => {
+  const response = await axios.get(`${base_url}producr/${price}`, config);
+
+  return response.data
+}
+
 const productService = {
   getProducts,
   createProduct,
   deleteProduct,
   getProduct,
-  updateProduct
+  updateProduct,
+  getProductPrice,
 };
 
 export default productService;

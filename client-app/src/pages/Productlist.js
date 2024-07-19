@@ -57,7 +57,7 @@ const Productlist = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getProducts());
-  }, []);
+  }, [productID]);
   const productState = useSelector((state) => state.product.products);
   const data1 = [];
   for (let i = 0; i < productState.length; i++) {
@@ -71,7 +71,7 @@ const Productlist = () => {
       action: (
         <>
           <Link
-            to={`/admin/product/${productState[i]._id}`}
+            to={`/admin/product/${productState[i]._id}`} //chuyển sang trang update sản phẩm
             className=" fs-3 text-danger"
           >
             <BiEdit />
@@ -101,14 +101,15 @@ const Productlist = () => {
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
-      <CustomModal
+      {/* mình có add thêm dòng này để ấn nút xóa sản phẩm */}
+      <CustomModal 
         hideModal={hideModal}
         open={open}
         performAction={() => {
           deleteProduct(productID);
         }}
         title="Bạn có chắc chắn muốn xóa?"
-      />
+      /> 
     </div>
   );
 };
