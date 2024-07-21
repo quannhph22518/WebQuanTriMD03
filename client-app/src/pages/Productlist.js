@@ -3,9 +3,10 @@ import { Table } from "antd";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAProduct, getProducts, resetState } from "../features/product/productSlice";
+import { deleteAProduct, getProducts, resetState, getAProduct } from "../features/product/productSlice";
 import { Link } from "react-router-dom";
 import CustomModal from "../components/CustomModal";
+import { SearchProduct } from "../components/SearchProduct";
 const columns = [
   {
     title: "STT",
@@ -42,7 +43,7 @@ const columns = [
 ];
 
 const Productlist = () => {
-  
+
   const [open, setOpen] = useState(false);
   const [productID, setproductId] = useState("");
   const showModal = (e) => {
@@ -57,7 +58,7 @@ const Productlist = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getProducts());
-  }, [productID]);
+  }, []);
   const productState = useSelector((state) => state.product.products);
   const data1 = [];
   for (let i = 0; i < productState.length; i++) {
@@ -97,19 +98,26 @@ const Productlist = () => {
   // console.log(data1);
   return (
     <div>
-      <h3 className="mb-4 title">Danh sách sản phẩm</h3>
+      <div className="row align-item-center">
+        <div className="col-6">
+          <h3 className="mb-4 title">Danh sách sản phẩm</h3>
+        </div>
+        <div className="col-6">
+          <SearchProduct/>
+        </div>
+      </div>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
       {/* mình có add thêm dòng này để ấn nút xóa sản phẩm */}
-      <CustomModal 
+      <CustomModal
         hideModal={hideModal}
         open={open}
         performAction={() => {
           deleteProduct(productID);
         }}
         title="Bạn có chắc chắn muốn xóa?"
-      /> 
+      />
     </div>
   );
 };

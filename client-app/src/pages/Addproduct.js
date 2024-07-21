@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import CustomInput from "../components/CustomInput";
 import ReactQuill from "react-quill";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "react-quill/dist/quill.snow.css";
 import { toast } from "react-toastify";
 import * as yup from "yup";
@@ -41,6 +41,7 @@ const Addproduct = () => {
   const newProduct = useSelector((state) => state.product);
   const location = useLocation();
   const getProductId = location.pathname.split("/")[3];// Lấy ra tên sản phẩm
+  
 
   const { 
     productTilte,
@@ -71,7 +72,9 @@ const Addproduct = () => {
     }
   }, [getProductId]);
 
-
+  // useEffect (() =>{
+  //   if()
+  // })
   useEffect(() => {
     if (isSuccess && createdProduct) {
       toast.success("Thêm sản phẩm thành công!");
