@@ -2,6 +2,13 @@ import React from "react";
 import { BsArrowDownRight, BsArrowUpRight } from "react-icons/bs";
 import { Column } from "@ant-design/plots";
 import { Table } from "antd";
+import { getProductAPrice } from "../features/product/productSlice";
+import useSelection from "antd/es/table/hooks/useSelection";
+import { Line } from "react-chartjs-2";
+import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement } from 'chart.js';
+import CharByDate from "../features/chart/chartByDate";
+
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
 const columns = [
   {
     title: "STT",
@@ -80,6 +87,9 @@ const Dashboard = () => {
       sales: 38,
     },
   ];
+  const ProductPriceState = useSelection((state) => state.product.products)
+  
+  
   const config = {
     data,
     xField: "type",
@@ -149,11 +159,11 @@ const Dashboard = () => {
             <p className="mb-0 desc">so với tháng 7 2024</p>
           </div>
         </div>
-      </div>
+        </div>
       <div className="mt-4">
-        <h3 className="mb-5 title">Thống kê doanh thu</h3>
+        <h3 className="mb-5 title">Thống kê tuần vừa rồi</h3>
         <div>
-          <Column {...config} />
+        <CharByDate/>
         </div>
       </div>
       <div className="mt-4">

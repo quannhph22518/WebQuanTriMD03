@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../features/product/productSlice";
+import { deleteAProduct, getProducts, resetState, getAProduct } from "../features/product/productSlice";
 import { Link } from "react-router-dom";
+import CustomModal from "../components/CustomModal";
+import { SearchProduct } from "../components/SearchProduct";
 const columns = [
   {
     title: "STT",
@@ -41,8 +43,20 @@ const columns = [
 ];
 
 const Productlist = () => {
+
+  const [open, setOpen] = useState(false);
+  const [productID, setproductId] = useState("");
+  const showModal = (e) => {
+    setOpen(true);
+    setproductId(e);
+  };
+
+  const hideModal = () => {
+    setOpen(false);
+  };
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(resetState());
     dispatch(getProducts());
   }, []);
   const productState = useSelector((state) => state.product.products);
@@ -57,24 +71,53 @@ const Productlist = () => {
       price: `${productState[i].price}`,
       action: (
         <>
-          <Link to="/" className=" fs-3 text-danger">
-
+          <Link
+            to={`/admin/product/${productState[i]._id}`} //chuyển sang trang update sản phẩm
+            className=" fs-3 text-danger"
+          >
             <BiEdit />
           </Link>
-          <Link className="ms-3 fs-3 text-danger" to="/">
+          <button
+            className="ms-3 fs-3 text-danger bg-transparent border-0"
+            onClick={() => showModal(productState[i]._id)}
+          >
             <AiFillDelete />
-          </Link>
+          </button>
         </>
       ),
     });
   }
-  console.log(data1);
+  const deleteProduct = (e) => {
+    dispatch(deleteAProduct(e));
+
+    setOpen(false);
+    setTimeout(() => {
+      dispatch(getProducts());
+    }, 100);
+  };
+  // console.log(data1);
   return (
     <div>
-      <h3 className="mb-4 title">Danh sách sản phẩm</h3>
+      <div className="row align-item-center">
+        <div className="col-6">
+          <h3 className="mb-4 title">Danh sách sản phẩm</h3>
+        </div>
+        <div className="col-6">
+          <SearchProduct/>
+        </div>
+      </div>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
+      {/* mình có add thêm dòng này để ấn nút xóa sản phẩm */}
+      <CustomModal
+        hideModal={hideModal}
+        open={open}
+        performAction={() => {
+          deleteProduct(productID);
+        }}
+        title="Bạn có chắc chắn muốn xóa?"
+      />
     </div>
   );
 };
