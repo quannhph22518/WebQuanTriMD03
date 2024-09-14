@@ -60,7 +60,7 @@ const Orders = () => {
           View Orders
         </Link>
       ),
-      amount: orderState[i].paymentIntent.amount,
+      // amount: orderState[i].paymentIntent.amount,
       date: new Date(orderState[i].createdAt).toLocaleString(),
       action: (
         <>

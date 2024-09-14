@@ -160,7 +160,7 @@ const MainLayout = () => {
                 <img
                   width={32}
                   height={32}
-                  src="https://stroyka-admin.html.themeforest.scompiler.ru/variants/ltr/images/customers/customer-4-64x64.jpg"
+                  src="https://image.smoney.vn/1200x630/Uploaded/2024/slfsy/2023_04_08/mclaren-p1-mso-pacific-blue-1-1834.jpg"
                   alt=""
                 />
               </div>
@@ -180,7 +180,7 @@ const MainLayout = () => {
                     style={{ height: "auto", lineHeight: "20px" }}
                     to="/"
                   >
-                    View Profile
+                    View Profilez
                   </Link>
                 </li>
                 <li>
