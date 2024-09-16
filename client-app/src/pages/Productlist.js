@@ -3,10 +3,15 @@ import { Table } from "antd";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAProduct, getProducts, resetState, getAProduct } from "../features/product/productSlice";
+import {
+  deleteAProduct,
+  getProducts,
+  resetState,
+} from "../features/product/productSlice";
 import { Link } from "react-router-dom";
 import CustomModal from "../components/CustomModal";
 import { SearchProduct } from "../components/SearchProduct";
+
 const columns = [
   {
     title: "STT",
@@ -43,59 +48,63 @@ const columns = [
 ];
 
 const Productlist = () => {
-
   const [open, setOpen] = useState(false);
-  const [productID, setproductId] = useState("");
-  const showModal = (e) => {
+  const [productID, setProductId] = useState("");
+  const [searchResults, setSearchResults] = useState([]); // State for search results
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(resetState());
+    dispatch(getProducts());
+  }, [dispatch]);
+
+  const productState = useSelector((state) => state.product.products);
+  const displayedProducts =
+    searchResults.length > 0 ? searchResults : productState; // Use search results if available
+
+  const data1 = displayedProducts.map((product, index) => ({
+    key: index + 1,
+    title: product.title,
+    brand: product.brand,
+    category: product.category,
+    color: product.color,
+    price: `${product.price}`,
+    action: (
+      <>
+        <Link
+          to={`/admin/product/${product._id}`} // Navigate to product update page
+          className="fs-3 text-danger"
+        >
+          <BiEdit />
+        </Link>
+        <button
+          className="ms-3 fs-3 text-danger bg-transparent border-0"
+          onClick={() => showModal(product._id)}
+        >
+          <AiFillDelete />
+        </button>
+      </>
+    ),
+  }));
+
+  const showModal = (id) => {
     setOpen(true);
-    setproductId(e);
+    setProductId(id);
   };
 
   const hideModal = () => {
     setOpen(false);
   };
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(resetState());
-    dispatch(getProducts());
-  }, []);
-  const productState = useSelector((state) => state.product.products);
-  const data1 = [];
-  for (let i = 0; i < productState.length; i++) {
-    data1.push({
-      key: i + 1,
-      title: productState[i].title,
-      brand: productState[i].brand,
-      category: productState[i].category,
-      color: productState[i].color,
-      price: `${productState[i].price}`,
-      action: (
-        <>
-          <Link
-            to={`/admin/product/${productState[i]._id}`} //chuyển sang trang update sản phẩm
-            className=" fs-3 text-danger"
-          >
-            <BiEdit />
-          </Link>
-          <button
-            className="ms-3 fs-3 text-danger bg-transparent border-0"
-            onClick={() => showModal(productState[i]._id)}
-          >
-            <AiFillDelete />
-          </button>
-        </>
-      ),
-    });
-  }
-  const deleteProduct = (e) => {
-    dispatch(deleteAProduct(e));
 
+  const deleteProduct = (id) => {
+    dispatch(deleteAProduct(id));
     setOpen(false);
     setTimeout(() => {
       dispatch(getProducts());
     }, 100);
   };
-  // console.log(data1);
+
   return (
     <div>
       <div className="row align-item-center">
@@ -103,13 +112,12 @@ const Productlist = () => {
           <h3 className="mb-4 title">Danh sách sản phẩm</h3>
         </div>
         <div className="col-6">
-          <SearchProduct/>
+          <SearchProduct setSearchResults={setSearchResults} />
         </div>
       </div>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
-      {/* mình có add thêm dòng này để ấn nút xóa sản phẩm */}
       <CustomModal
         hideModal={hideModal}
         open={open}

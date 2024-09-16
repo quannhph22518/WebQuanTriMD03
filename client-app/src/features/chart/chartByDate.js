@@ -14,7 +14,7 @@ const CharByDate = () => {
         label: 'Tổng doanh thu',
         backgroundColor: 'blue',
         borderColor: 'blue',
-        data: [0, 0, 0, 0, 0, 0, 0],
+        data: [3000, 8050, 2500, 10000, 900, 1000, 0],
         tension: 0.4,
       },
     ],

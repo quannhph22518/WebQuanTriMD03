@@ -7,15 +7,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/auth/authSlice";
 
 let schema = yup.object().shape({
-  email: yup
-    .string()
-    .email("Email phải hợp lệ")
-    .required("*Nhập email"),
+  email: yup.string().email("Email phải hợp lệ").required("*Nhập email"),
   password: yup.string().required("*Nhập mật khẩu"),
 });
+
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const authState = useSelector((state) => state.auth); // Accessing auth slice directly
+
+  const { user, isError, isSuccess, isLoading, message } = authState;
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -26,17 +28,17 @@ const Login = () => {
       dispatch(login(values));
     },
   });
-  const authState = useSelector((state) => state);
-
-  const { user, isError, isSuccess, isLoading, message } = authState.auth;
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && user) {
+      // Save user data to localStorage on successful login
+      localStorage.setItem("user", JSON.stringify(user));
       navigate("admin");
-    } else {
+    } else if (isError) {
       navigate("");
     }
-  }, [user, isError, isSuccess, isLoading]);
+  }, [user, isError, isSuccess, isLoading, navigate]);
+
   return (
     <div className="py-5" style={{ background: "#ffd333", minHeight: "100vh" }}>
       <br />
@@ -46,10 +48,11 @@ const Login = () => {
       <br />
       <div className="my-5 w-25 bg-white rounded-3 mx-auto p-4">
         <h3 className="text-center title">Đăng nhập</h3>
-        <p className="text-center">Đăng nhập vào tài khoản của bạn để tiếp tục
-        .</p>
+        <p className="text-center">
+          Đăng nhập vào tài khoản của bạn để tiếp tục.
+        </p>
         <div className="error text-center">
-          {message.message == "Rejected" ? "You are not an Admin" : ""}
+          {message.message === "Rejected" ? "You are not an Admin" : ""}
         </div>
         <form action="" onSubmit={formik.handleSubmit}>
           <CustomInput
